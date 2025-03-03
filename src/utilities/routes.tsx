@@ -1,0 +1,50 @@
+export const routes = Object.freeze({
+  BASE_URL: "/",
+  SIGN_IN: "/sign-in",
+  SIGN_UP: "/sign-up",
+  CONTACT_US: "/contact-us",
+  INDIVIDUAL_AND_FAMILY_HMO: "/individual-and-family-hmo",
+  CORPORATE_HMO: "/corporate-and-group-hmo",
+  THIRD_PARTY_MOTOR_INSURANCE: "/third-party-motor-insurance",
+  ENHANCED_THIRD_PARTY_MOTOR_INSURANCE: "/enhanced-third-party-motor-insurance",
+  COMPREHENSIVE_MOTOR_INSTRANCE: "/comprehensive-motor-insurance",
+  FLEET_MOTOR_INSURANCE: "/fleet-motor-insurance",
+  HEALTH_AND_INSURANCE_FRIENDLY_MATCH: "/health-and-insurance-friendly-match",
+  THE_TECH_TITANS: "/the-tech-titans",
+  PRIVACY_POLICY: "/privacy-policy",
+  TERMS_AND_CONDITIONS: "/terms-and-conditions",
+  HEALTH_INSURANCE: "/health-insurance",
+  PROPERTY_INSURANCE: "/property-insurance",
+  MOTOR_INSURANCE: "/motor-insurance",
+  DASHBOARD: "/dashboard",
+  POLICIES: "/policies",
+  LETS_PLAY: "/lets-play",
+  ALL_RISK: "/all-risk",
+  BUILDING: "/building",
+  TRACKER: "/dashboard/tracker",
+  USERS: "/users",
+  CLAIMS: "/claims",
+});
+
+export const dashboardRoutes = [
+  {
+    title: "Dashboard",
+    route: routes.DASHBOARD,
+    properties: ["isProtected"],
+  },
+  {
+    title: "Policies",
+    route: routes.POLICIES,
+    properties: ["isProtected"],
+  },
+  {
+    title: "Claims",
+    route: routes.CLAIMS,
+    properties: ["isProtected"],
+  },
+  {
+    title: "Users",
+    route: routes.USERS,
+    properties: ["isProtected"],
+  },
+];

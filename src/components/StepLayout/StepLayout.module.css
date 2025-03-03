@@ -1,0 +1,219 @@
+.container {
+  min-height: 100vh;
+  position: relative;
+  padding: 4rem 100px;
+}
+
+.stepIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 40%;
+  margin-inline: auto;
+}
+
+.step:nth-child(1) > hr {
+  display: none;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.step:nth-child(1) {
+  width: 50px;
+}
+
+.step:not(.step:nth-child(1)) {
+  flex: 1;
+}
+
+.step > hr {
+  flex: 1;
+  transition: all 0.3s ease-in-out;
+}
+
+.step > span {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: General Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px;
+  transition: all 0.3s ease-in-out;
+}
+
+.active > span {
+  background: var(--yellow);
+  color: var(--white);
+}
+
+.active > hr {
+  border: 1px solid var(--yellow);
+}
+
+.inActive > span {
+  border: 1px solid var(--grey3);
+  color: var(--grey3);
+}
+
+.children {
+  margin: 4rem auto;
+  width: 70%;
+  padding: 4rem 2rem;
+  border-radius: 14px;
+  box-shadow: #edd0142c 0px 5px 15px;
+  background-color: var(--white);
+}
+
+.children > form,
+.children > div:not(.header) {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.header > h4 {
+  font-family: General Sans;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -3px;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.nextButton {
+  margin-left: auto;
+}
+
+@media screen and (min-width: 767px) and (max-width: 1023px) {
+  .header {
+    position: sticky;
+    top: 0;
+    height: 49px;
+    background: var(--white);
+    z-index: 2;
+    padding: 0.5rem 1rem;
+  }
+
+  .header > img {
+    height: 35px;
+    width: 35px;
+  }
+
+  .step:nth-child(1) {
+    width: 26px;
+  }
+
+  .innerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc((100vh - 98px));
+    padding: 1rem;
+  }
+
+  .body {
+    width: 100%;
+    min-height: 70%;
+    padding: 2rem 0;
+  }
+
+  .step > span {
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    line-height: 23px;
+  }
+
+  .children {
+    margin-top: 40px;
+    padding: 2rem 0px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    min-height: 100vh;
+    position: relative;
+    padding: 2rem 1rem;
+  }
+
+  .stepIndicator {
+    max-width: 100%;
+  }
+
+  .step:nth-child(1) > hr {
+    display: none;
+  }
+
+  .step:not(.step:nth-child(1)) {
+    flex: 1;
+  }
+
+  .step > hr {
+    flex: 1;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .active > span {
+    background: var(--yellow);
+    color: var(--white);
+  }
+
+  .active > hr {
+    border: 1px solid var(--yellow);
+  }
+
+  .inActive > span {
+    border: 1px solid var(--grey3);
+    color: var(--grey3);
+  }
+
+  .children {
+    margin: 2rem auto;
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+
+  .children > form,
+  .children > div:not(.header) {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .children > form > div,
+  .children > div:not(.header) > div {
+    width: 100%;
+  }
+
+  .header > h4 {
+    font-family: General Sans;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 130%;
+    letter-spacing: -3px;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}

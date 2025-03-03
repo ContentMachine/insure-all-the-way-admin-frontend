@@ -1,0 +1,81 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: auto;
+}
+
+.container > div {
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  flex-shrink: 0;
+}
+
+.inActive {
+  font-weight: 400;
+  color: var(--gray-dark);
+  border-bottom: 2px solid transparent;
+}
+
+.active {
+  color: var(--black);
+  border-bottom: 2px solid var(--yellow);
+}
+
+.active.button {
+  background: linear-gradient(195.12deg, #135ef2 28.81%, #568cf6 83.85%);
+  color: var(--white);
+  border-radius: 72px;
+  font-weight: 700;
+}
+
+.active.tertiary {
+  color: var(--buttonTextBlue);
+  font-weight: 700;
+  box-shadow: 0px 31px 50px 0px #09454312;
+  background-color: var(--white);
+}
+
+.inActive.tertiary {
+  color: var(--grey9);
+}
+
+.container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.container > div.bordered {
+  border: 3px solid red;
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    gap: 8px;
+    overflow: auto;
+  }
+
+  .container > div {
+    flex-shrink: 0;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1023px) {
+  .container {
+    gap: 8px;
+    overflow: auto;
+  }
+
+  .container > div {
+    flex-shrink: 0;
+  }
+}

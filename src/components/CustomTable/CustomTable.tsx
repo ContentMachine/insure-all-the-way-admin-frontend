@@ -95,7 +95,6 @@ const CustomTable: React.FC<CustomTableProps> = ({
             onClick={() => {
               onRowClick && onRowClick(row);
               setState && setState(row?._id || row?.id);
-              console.log(row, "ID");
             }}
           >
             {fields.map((field, colIndex) => {

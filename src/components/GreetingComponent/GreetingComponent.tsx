@@ -22,8 +22,6 @@ const GreetingComponent = () => {
     }
   };
 
-  console.log(user, "Hm");
-
   return (
     <div>
       <section className={classes.container}>

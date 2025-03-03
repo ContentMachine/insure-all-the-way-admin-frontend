@@ -78,8 +78,6 @@ const DashboardTables = () => {
     });
   }, [claimsData?.data]);
 
-  console.log(claimsData?.data?.claims, "Claims");
-
   //   Requests
   const userstatusToggleHandeler = () => {
     requestHandler({

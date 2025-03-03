@@ -36,8 +36,6 @@ const UserInfoModalBody = ({
       }
     }, [data]);
 
-  console.log(policyInfo, data?.data?.user);
-
   if (isLoading) {
     return <Loader />;
   }

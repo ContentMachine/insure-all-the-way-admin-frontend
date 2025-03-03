@@ -35,8 +35,6 @@ const ReassignAnAgentModalBody = ({
     if (data?.data) setSelectedId(data?.data?.policy?.agent?.id);
   }, [data]);
 
-  console.log(selectedId, 1000, agents);
-
   if (agentIsLoading || isLoading) {
     return <Loader />;
   }
@@ -48,8 +46,6 @@ const ReassignAnAgentModalBody = ({
 
       <div className={classes.body}>
         {agents?.map((data: any, i: number) => {
-          console.log(selectedId === data?._id, policyId, selectedId);
-
           return (
             <div
               key={i}

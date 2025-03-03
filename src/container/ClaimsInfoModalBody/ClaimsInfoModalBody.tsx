@@ -17,8 +17,6 @@ const ClaimsInfoModalBody = ({ onClose, id }: ClaimsInfoModalBodyTypes) => {
   // Requests
   const { isLoading, data } = useClaimById(id);
 
-  console.log(id, "Claims");
-
   // MEmos
   const claimsInfo: { title: string; value: string }[] | undefined =
     useMemo(() => {
@@ -53,7 +51,6 @@ const ClaimsInfoModalBody = ({ onClose, id }: ClaimsInfoModalBodyTypes) => {
       <div className={classes.body}>
         {claimsInfo?.map((data, i) => {
           if (data?.title.includes("Date")) {
-            console.log(data, "Hmm");
             return (
               <div key={i}>
                 <h4>{data?.title}</h4>

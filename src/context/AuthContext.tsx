@@ -56,7 +56,9 @@ const AuthContextProvider = ({ children }: AuthContextProviderType) => {
   };
 
   const logout = () => {
-    localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY);
+    }
     setUser(null);
     router.push(routes.SIGN_IN);
   };

@@ -20,18 +20,25 @@ const UserStats = () => {
 
   return (
     <section className={classes.container}>
-      <PoliciesSummaryCard title="Users" amount={stats?.allUsers} notAmount />
+      <PoliciesSummaryCard
+        title="Users"
+        amount={stats?.allUsers}
+        notAmount
+        backgroundColor="#717171"
+      />
 
       <PoliciesSummaryCard
         title="Active Users "
         amount={stats?.activeUsers}
         notAmount
+        backgroundColor="rgb(46, 204, 113)"
       />
 
       <PoliciesSummaryCard
         title=" Inactive users"
         amount={stats?.inActiveUsers}
         notAmount
+        backgroundColor="rgb(212, 47, 47)"
       />
     </section>
   );

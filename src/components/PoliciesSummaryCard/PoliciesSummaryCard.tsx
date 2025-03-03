@@ -17,6 +17,7 @@ type AmountDetailsCardTypes = {
     action: () => void;
   };
   notAmount?: boolean;
+  backgroundColor?: string;
 };
 
 const PoliciesSummaryCard = ({
@@ -24,9 +25,10 @@ const PoliciesSummaryCard = ({
   amount,
   cta,
   notAmount,
+  backgroundColor,
 }: AmountDetailsCardTypes) => {
   return (
-    <div className={classes.container}>
+    <div className={classes.container} style={{ backgroundColor }}>
       <span className="text-base font-normal font-main">{title}</span>
       <h2> {notAmount ? amount : `₦${formatCurrency(amount)}`}</h2>
       {cta && (

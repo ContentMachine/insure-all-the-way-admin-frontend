@@ -88,67 +88,81 @@ const CustomTable: React.FC<CustomTableProps> = ({
       )}
 
       {data && data.length > 0 ? (
-        data.map((row, rowIndex) => (
-          <div
-            key={rowIndex}
-            className={classes.tableBodyContainer}
-            onClick={() => {
-              onRowClick && onRowClick(row);
-              setState && setState(row?._id || row?.id);
-            }}
-          >
-            {fields.map((field, colIndex) => {
-              if (field?.includes("Date")) {
+        data.map((row, rowIndex) => {
+          const daysLeft = row?.daysLeft;
+          return (
+            <div
+              key={rowIndex}
+              className={`${classes.tableBodyContainer}`}
+              onClick={() => {
+                onRowClick && onRowClick(row);
+                setState && setState(row?._id || row?.id);
+              }}
+            >
+              {fields.map((field, colIndex) => {
+                if (field?.includes("Date")) {
+                  return (
+                    <span key={colIndex} className={classes.tableBody}>
+                      <span
+                        className={`${
+                          daysLeft < 14
+                            ? classes?.late
+                            : daysLeft >= 14 && daysLeft < 60
+                            ? classes.midLate
+                            : classes.early
+                        }`}
+                      >
+                        {row[field] !== undefined && row[field] !== null
+                          ? capitalize(String(row[field]))
+                          : ""}
+                      </span>
+                    </span>
+                  );
+                }
+
                 return (
                   <span key={colIndex} className={classes.tableBody}>
                     {row[field] !== undefined && row[field] !== null
-                      ? capitalize(String(row[field]))
+                      ? structureWords(String(row[field]))
                       : ""}
                   </span>
                 );
-              }
-              return (
-                <span key={colIndex} className={classes.tableBody}>
-                  {row[field] !== undefined && row[field] !== null
-                    ? structureWords(String(row[field]))
-                    : ""}
-                </span>
-              );
-            })}
+              })}
 
-            {isOptions && (
-              <span className={classes.tableBody}>
-                <span
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleActiveRow(rowIndex);
-                    setState && setState(row?._id || row?.id);
-                  }}
-                  className={classes.button}
-                >
-                  <span>Options</span>
-                  <ArrowDown dimensions="16px" />
+              {isOptions && (
+                <span className={classes.tableBody}>
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleActiveRow(rowIndex);
+                      setState && setState(row?._id || row?.id);
+                    }}
+                    className={classes.button}
+                  >
+                    <span>Options</span>
+                    <ArrowDown dimensions="16px" />
 
-                  {activeRow === rowIndex && options.length > 0 && (
-                    <div className={classes.options} ref={optionsRef}>
-                      {options.map((option, optionIndex) => (
-                        <span
-                          key={optionIndex}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            option.action(row);
-                          }}
-                        >
-                          {option.text}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                    {activeRow === rowIndex && options.length > 0 && (
+                      <div className={classes.options} ref={optionsRef}>
+                        {options.map((option, optionIndex) => (
+                          <span
+                            key={optionIndex}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              option.action(row);
+                            }}
+                          >
+                            {option.text}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </span>
                 </span>
-              </span>
-            )}
-          </div>
-        ))
+              )}
+            </div>
+          );
+        })
       ) : (
         <p className={classes.paragraph}>No data available</p>
       )}

@@ -23,18 +23,28 @@ const PoliciesStats = () => {
         title="Policies"
         amount={stats?.policiesLength}
         notAmount
+        backgroundColor="#717171"
       />
 
       <PoliciesSummaryCard
         title="Active Policies "
         amount={stats?.activePolicies}
         notAmount
+        backgroundColor="rgb(46, 204, 113)"
       />
 
       <PoliciesSummaryCard
         title="Pending policies "
         amount={stats?.pendingPolicies}
         notAmount
+        backgroundColor="rgb(255, 193, 7)"
+      />
+
+      <PoliciesSummaryCard
+        title="Expired policies "
+        amount={stats?.expiredPolicies}
+        notAmount
+        backgroundColor="rgb(212, 47, 47)"
       />
     </section>
   );

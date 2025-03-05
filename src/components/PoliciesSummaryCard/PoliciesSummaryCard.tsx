@@ -18,6 +18,7 @@ type AmountDetailsCardTypes = {
   };
   notAmount?: boolean;
   backgroundColor?: string;
+  noDecoration?: boolean;
 };
 
 const PoliciesSummaryCard = ({
@@ -26,9 +27,11 @@ const PoliciesSummaryCard = ({
   cta,
   notAmount,
   backgroundColor,
+  noDecoration,
 }: AmountDetailsCardTypes) => {
   return (
     <div className={classes.container} style={{ backgroundColor }}>
+      <div className={classes.overlay}></div>
       <span className="text-base font-normal font-main">{title}</span>
       <h2> {notAmount ? amount : `₦${formatCurrency(amount)}`}</h2>
       {cta && (
@@ -42,8 +45,12 @@ const PoliciesSummaryCard = ({
           </button>
         </div>
       )}
-      <CardDecoration1 className={classes.decoration1} />
-      <CardDecoration2 className={classes.decoration2} />
+      {!noDecoration && (
+        <>
+          <CardDecoration1 className={classes.decoration1} />
+          <CardDecoration2 className={classes.decoration2} />
+        </>
+      )}
     </div>
   );
 };

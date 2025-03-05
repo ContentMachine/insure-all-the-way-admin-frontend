@@ -25,6 +25,8 @@ const UserStats = () => {
         amount={stats?.allUsers}
         notAmount
         backgroundColor="#717171"
+        noDecoration
+        cta={{ text: "Go to Users", action() {} }}
       />
 
       <PoliciesSummaryCard
@@ -32,6 +34,8 @@ const UserStats = () => {
         amount={stats?.activeUsers}
         notAmount
         backgroundColor="rgb(46, 204, 113)"
+        noDecoration
+        cta={{ text: "Go to Users", action() {} }}
       />
 
       <PoliciesSummaryCard
@@ -39,6 +43,8 @@ const UserStats = () => {
         amount={stats?.inActiveUsers}
         notAmount
         backgroundColor="rgb(212, 47, 47)"
+        noDecoration
+        cta={{ text: "Go to Users", action() {} }}
       />
     </section>
   );

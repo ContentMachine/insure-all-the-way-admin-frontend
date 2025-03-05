@@ -24,6 +24,7 @@ const PoliciesStats = () => {
         amount={stats?.policiesLength}
         notAmount
         backgroundColor="#717171"
+        noDecoration
       />
 
       <PoliciesSummaryCard
@@ -31,6 +32,7 @@ const PoliciesStats = () => {
         amount={stats?.activePolicies}
         notAmount
         backgroundColor="rgb(46, 204, 113)"
+        noDecoration
       />
 
       <PoliciesSummaryCard
@@ -38,6 +40,7 @@ const PoliciesStats = () => {
         amount={stats?.pendingPolicies}
         notAmount
         backgroundColor="rgb(255, 193, 7)"
+        noDecoration
       />
 
       <PoliciesSummaryCard
@@ -45,6 +48,7 @@ const PoliciesStats = () => {
         amount={stats?.expiredPolicies}
         notAmount
         backgroundColor="rgb(212, 47, 47)"
+        noDecoration
       />
     </section>
   );

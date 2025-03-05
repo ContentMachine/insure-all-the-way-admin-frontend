@@ -59,7 +59,7 @@
   gap: 1rem;
   justify-content: space-between;
   padding: 0.5rem;
-  border: 1px solid var(--green);
+  border: 1px solid var(--yellow);
   overflow: hidden;
   border-radius: 4px;
 }

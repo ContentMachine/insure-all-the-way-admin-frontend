@@ -1,14 +1,14 @@
 import Button from "@/components/Button/Button";
 import classes from "./PolicyInformationModalBody.module.css";
-import Phone from "@/assets/svgIcons/Phone";
 import Close from "@/assets/svgIcons/Close";
-import Draft from "@/assets/svgIcons/Draft";
 import { usePolicyById } from "@/hooks/usePolicies";
 import { useMemo } from "react";
 import Loader from "@/components/Loader/Loader";
 import { capitalize, structureWords } from "@/helpers/capitalize";
 import moment from "moment";
 import { formatObject } from "@/helpers/validateObjectValues";
+import { downloadFile } from "@/helpers/download";
+import { formatCurrency } from "@/helpers/formatAmount";
 
 type PolicyInformationModalBodyTypes = {
   onClose?: () => void;
@@ -32,6 +32,7 @@ const PolicyInformationModalBody = ({
           "user",
           "createdAt",
           "agent",
+          "isTrackerInstalled",
         ]);
       }
     }, [data]);
@@ -55,6 +56,18 @@ const PolicyInformationModalBody = ({
               </div>
             );
           }
+
+          if (data?.value.includes("Https")) {
+            return (
+              <div key={i}>
+                <h4>{data?.title}</h4>
+                <p onClick={() => downloadFile(data?.value, data?.title)}>
+                  {capitalize(`Download ${data?.title}`)}
+                </p>
+              </div>
+            );
+          }
+
           return (
             <div key={i}>
               <h4>{data?.title}</h4>

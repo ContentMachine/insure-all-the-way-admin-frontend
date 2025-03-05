@@ -12,6 +12,7 @@ type FileUploadInputTypes = {
   title: string;
   id?: string;
   accept?: string;
+  supportedFormats?: string[];
 };
 
 const FileUploadInput = ({
@@ -20,6 +21,7 @@ const FileUploadInput = ({
   title,
   id,
   accept,
+  supportedFormats,
 }: FileUploadInputTypes) => {
   // States
   const [isDraggingOver, setIsDraggingOver] = useState(false);
@@ -87,7 +89,18 @@ const FileUploadInput = ({
           onChange={handleFileChange}
         />
 
-        <p>Supported formates: JPEG, PNG</p>
+        {supportedFormats && (
+          <p>
+            Supported formats:{" "}
+            {supportedFormats?.map((data, i) => {
+              if (i >= supportedFormats?.length - 1) {
+                return <span>{` ${data}`}</span>;
+              } else {
+                return <span>{` ${data},`}</span>;
+              }
+            })}
+          </p>
+        )}
       </div>
 
       {files?.length > 0 && (

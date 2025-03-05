@@ -8,10 +8,12 @@ import { requestHandler } from "@/helpers/requestHandler";
 import useError from "@/hooks/useError";
 import { usePolicies } from "@/hooks/usePolicies";
 import { modalGenericType, requestType } from "@/utilities/types";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { mutate } from "swr";
 import PolicyInformationModalBody from "../PolicyInformationModalBody/PolicyInformationModalBody";
 import ReassignAnAgentModalBody from "../ReassignAnAgentModalBody/ReassignAnAgentModalBody";
+import CertificateUploadModalBody from "../CertificateUploadModalBody/CertificateUploadModalBody";
+import Loader from "@/components/Loader/Loader";
 
 export const policyHeaders = [
   "Policy Held",
@@ -31,7 +33,12 @@ const PoliciesTable = () => {
   const [modals, setModals] = useState<modalGenericType>({
     policyDetails: false,
     reassignAgent: false,
+    uploadCertificate: false,
   });
+  const [certificate, setCertificate] = useState<File[] | null>([]);
+  const [certificateFormData, setCertificateFormData] = useState(
+    new FormData()
+  );
 
   //   Hooks
   const { showToast } = useToast();
@@ -89,6 +96,28 @@ const PoliciesTable = () => {
     });
   };
 
+  const handleCertificateUpload = () => {
+    requestHandler({
+      url: `/admin/policies/${activeUserId}`,
+      data: certificateFormData,
+      method: "PATCH",
+      isMultipart: true,
+      requestCleanup: true,
+      state: requestState,
+      setState: setRequestState,
+      successFunction(res) {
+        showToast(res?.data?.message, "success");
+        mutate(`/admin/policies`);
+        setAllModalsFalse(setModals);
+        setCertificate(null);
+      },
+      id: "upload-certificate",
+      errorFunction(err) {
+        errorFlowFunction(err);
+      },
+    });
+  };
+
   const policiesOptions = [
     {
       text: "Re-assign An Agent",
@@ -103,7 +132,30 @@ const PoliciesTable = () => {
         policyStatusToggleHandeler();
       },
     },
+
+    {
+      text: "Upload Certificate",
+      action: () => {
+        setModalTrue(setModals, "uploadCertificate");
+      },
+    },
   ];
+
+  // Effects
+  useEffect(() => {
+    if (certificate?.length) {
+      const subCertificateFormData = new FormData();
+
+      subCertificateFormData.append("certificate", certificate[0] as File);
+
+      setCertificateFormData(subCertificateFormData);
+    }
+  }, [certificate]);
+
+  if (policiesIsLoading) {
+    return <Loader />;
+  }
+
   return (
     <>
       {modals.policyDetails && (
@@ -131,6 +183,21 @@ const PoliciesTable = () => {
               loading={
                 requestState?.id === "reassign-agent" && requestState?.isLoading
               }
+            />
+          }
+        />
+      )}
+
+      {modals.uploadCertificate && (
+        <Modal
+          onClick={() => setAllModalsFalse(setModals)}
+          body={
+            <CertificateUploadModalBody
+              onClose={() => setAllModalsFalse(setModals)}
+              certificate={certificate}
+              setCertificate={setCertificate}
+              requestState={requestState}
+              onSubmit={handleCertificateUpload}
             />
           }
         />

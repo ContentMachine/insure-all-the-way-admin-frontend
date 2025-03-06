@@ -11,6 +11,7 @@ import React, {
   useState,
 } from "react";
 import classes from "./CustomTable.module.css";
+import Input from "../Input/Input";
 
 export type TableOption = {
   text: string;
@@ -69,6 +70,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
     <div className={classes.container}>
       <div className={classes.header}>
         <span>{header}</span>
+        <input placeholder="Search" />
       </div>
 
       <div className={classes.tableHeaderContainer}>

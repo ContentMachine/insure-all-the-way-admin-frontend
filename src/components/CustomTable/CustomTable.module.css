@@ -21,6 +21,19 @@
   display: inline-block;
 }
 
+.header > input {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-family: "General Sans";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  padding: 10px;
+  min-width: 200px;
+  border: 2px solid var(--grey4);
+  outline: none;
+}
+
 .tableHeaderContainer {
   display: flex;
   border-bottom: 1px solid var(--grey);

@@ -14,6 +14,7 @@ import PolicyInformationModalBody from "../PolicyInformationModalBody/PolicyInfo
 import ReassignAnAgentModalBody from "../ReassignAnAgentModalBody/ReassignAnAgentModalBody";
 import CertificateUploadModalBody from "../CertificateUploadModalBody/CertificateUploadModalBody";
 import Loader from "@/components/Loader/Loader";
+import useUpdateSearchParams from "@/hooks/useUpdateSearchParams";
 
 export const policyHeaders = [
   "Policy Held",
@@ -21,6 +22,27 @@ export const policyHeaders = [
   "User",
   "Status",
 ];
+
+const policyHeaderOptions: { [key: string]: string[] } = {
+  "motor-insurance": [
+    "Policy Held",
+    "Expiration Date",
+    "Documentation",
+    "Status",
+  ],
+  "health-insurance": [
+    "Policy Held",
+    "Expiration Date",
+    "Name of Organization",
+    "Status",
+  ],
+  "property-insurance": [
+    "Policy Held",
+    "Expiration Date",
+    "Location Of Property",
+    "Status",
+  ],
+};
 
 const PoliciesTable = () => {
   // States
@@ -40,10 +62,16 @@ const PoliciesTable = () => {
     new FormData()
   );
 
+  // Hooks
+  const { updateSearchParams } = useUpdateSearchParams();
+  const policy = updateSearchParams("policy", undefined, "get");
+
   //   Hooks
   const { showToast } = useToast();
   const { errorFlowFunction } = useError();
-  const { isLoading: policiesIsLoading, data: policiesData } = usePolicies();
+  const { isLoading: policiesIsLoading, data: policiesData } = usePolicies(
+    policy as string
+  );
 
   //   Memo
   const policies = useMemo(() => {
@@ -204,25 +232,23 @@ const PoliciesTable = () => {
       )}
 
       <section>
-        {policies?.length > 0 && (
-          <CustomTable
-            header="Policies"
-            data={policies}
-            headers={policyHeaders}
-            options={policiesOptions}
-            fields={["insuranceType", "endDate", "userDetails", "status"]}
-            isOptions
-            setState={setActiveUserId}
-            onRowClick={() => {
-              setModalTrue(setModals, "policyDetails");
-            }}
-            loading={
-              (requestState?.id === "toggle-policy-status" &&
-                requestState?.isLoading) ||
-              policiesIsLoading
-            }
-          />
-        )}
+        <CustomTable
+          header="Policies"
+          data={policies}
+          headers={policyHeaderOptions[policy as string] || policyHeaders}
+          options={policiesOptions}
+          fields={["insuranceType", "endDate", "userDetails", "status"]}
+          isOptions
+          setState={setActiveUserId}
+          onRowClick={() => {
+            setModalTrue(setModals, "policyDetails");
+          }}
+          loading={
+            (requestState?.id === "toggle-policy-status" &&
+              requestState?.isLoading) ||
+            policiesIsLoading
+          }
+        />
       </section>
     </>
   );

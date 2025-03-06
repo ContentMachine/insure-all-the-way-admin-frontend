@@ -18,8 +18,10 @@ export const useUserById = (id: string) => {
   return useGetHook(url);
 };
 
-export const usePolicies = () => {
-  const url = `/admin/policies`;
+export const usePolicies = (policy?: string) => {
+  const url = policy
+    ? `/admin/policies?insuranceType=${policy}`
+    : `/admin/policies`;
 
   return useGetHook(url);
 };
@@ -48,8 +50,10 @@ export const useClaimById = (id: string) => {
   return useGetHook(url);
 };
 
-export const usePoliciesStats = () => {
-  const url = `/admin/policies/policy/stats`;
+export const usePoliciesStats = (policy?: string) => {
+  const url = !policy
+    ? `/admin/policies/policy/stats`
+    : `/admin/policies/policy/stats?insuranceType=${policy}`;
 
   return useGetHook(url);
 };
@@ -62,6 +66,12 @@ export const useClaimsStats = () => {
 
 export const useUserStats = () => {
   const url = `/admin/users/user/stats`;
+
+  return useGetHook(url);
+};
+
+export const useAllPolicies = () => {
+  const url = `/policies/policy`;
 
   return useGetHook(url);
 };

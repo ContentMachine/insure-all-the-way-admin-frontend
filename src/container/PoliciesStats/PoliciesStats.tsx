@@ -3,12 +3,18 @@
 import Loader from "@/components/Loader/Loader";
 import PoliciesSummaryCard from "@/components/PoliciesSummaryCard/PoliciesSummaryCard";
 import { usePoliciesStats } from "@/hooks/usePolicies";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import classes from "../DashboardSummary/DashboardSummary.module.css";
+import useUpdateSearchParams from "@/hooks/useUpdateSearchParams";
+import { mutate } from "swr";
 
 const PoliciesStats = () => {
+  // Hooks
+  const { updateSearchParams } = useUpdateSearchParams();
+  const activePolicy = updateSearchParams("policy", undefined, "get");
+
   // Request
-  const { isLoading, data } = usePoliciesStats();
+  const { isLoading, data } = usePoliciesStats(activePolicy as string);
 
   // Memo
   const stats = useMemo(() => data?.data, [data]);

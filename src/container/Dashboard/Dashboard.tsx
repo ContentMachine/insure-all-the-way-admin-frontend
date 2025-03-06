@@ -8,6 +8,7 @@ const Dashboard = () => {
   return (
     <DashboardLayout className={classes.container}>
       <GreetingComponent />
+
       <DashboardSummary />
       <DashboardTables />
     </DashboardLayout>

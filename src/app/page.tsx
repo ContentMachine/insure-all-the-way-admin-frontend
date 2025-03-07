@@ -1,9 +1,10 @@
-import SignIn from "@/container/SignIn/SignIn";
+import Loader from "@/components/Loader/Loader";
 import { routes } from "@/utilities/routes";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 export default function Home() {
-  redirect(routes.DASHBOARD);
+  <Suspense fallback={<Loader />}>{redirect(routes.DASHBOARD)}</Suspense>;
 
   return null;
 }

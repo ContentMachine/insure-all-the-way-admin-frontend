@@ -10,7 +10,7 @@ import { requestHandler } from "@/helpers/requestHandler";
 import useError from "@/hooks/useError";
 import { useClaims, usePolicies, useUsers } from "@/hooks/usePolicies";
 import { modalGenericType, requestType } from "@/utilities/types";
-import React, { useMemo, useState } from "react";
+import React, { Suspense, useMemo, useState } from "react";
 import { mutate } from "swr";
 import ClaimsInfoModalBody from "../ClaimsInfoModalBody/ClaimsInfoModalBody";
 import PolicyInformationModalBody from "../PolicyInformationModalBody/PolicyInformationModalBody";
@@ -22,13 +22,13 @@ import ClaimsTable from "../ClaimsTable/ClaimsTable";
 
 const DashboardTables = () => {
   return (
-    <>
+    <Suspense fallback={<Loader />}>
       <section>
         <UsersTable />
         <PoliciesTable />
         <ClaimsTable />
       </section>
-    </>
+    </Suspense>
   );
 };
 

@@ -17,6 +17,9 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((axiosConfig) => {
   if (!navigator.onLine) {
+    console.log(navigator?.onLine);
+
+    console.log("This is a testtt");
     throw new Error("Please check your internet connection");
   }
 
@@ -30,6 +33,10 @@ axiosInstance.interceptors.response.use(
     if (response?.status === 200 || response?.status === 201) {
       return response;
     } else {
+      if (navigator?.onLine) {
+        throw new Error("Please check your internet connection");
+      }
+
       throw new Error(response?.data?.error?.message);
     }
   },

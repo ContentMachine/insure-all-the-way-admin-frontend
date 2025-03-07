@@ -1,3 +1,5 @@
+"use client";
+
 import ArrowDown from "@/assets/svgIcons/ArrowDown";
 import { capitalize, structureWords } from "@/helpers/capitalize";
 import { TABLE_LENGTH } from "@/utilities/constants";
@@ -11,7 +13,7 @@ import React, {
   useState,
 } from "react";
 import classes from "./CustomTable.module.css";
-import Input from "../Input/Input";
+import { inputChangeHandler } from "@/helpers/inputChangeHandler";
 
 export type TableOption = {
   text: string;
@@ -28,6 +30,10 @@ type CustomTableProps = {
   onRowClick?: (rowData: Record<string, any>) => void;
   setState?: Dispatch<SetStateAction<string | null>>;
   loading?: boolean;
+  request?: () => void;
+  setSearchKey?: Dispatch<SetStateAction<string>>;
+  sliceValue?: number;
+  route?: string;
 };
 
 const CustomTable: React.FC<CustomTableProps> = ({
@@ -40,8 +46,12 @@ const CustomTable: React.FC<CustomTableProps> = ({
   onRowClick,
   setState,
   loading,
+  setSearchKey,
+  sliceValue,
+  route,
 }) => {
   const [activeRow, setActiveRow] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
 
   const toggleActiveRow = (index: number) => {
     setActiveRow(activeRow === index ? null : index);
@@ -66,11 +76,31 @@ const CustomTable: React.FC<CustomTableProps> = ({
     }
   });
 
+  // Effects
+  useEffect(() => {
+    if (setSearchKey) {
+      const timeout = setTimeout(() => {
+        setSearchKey(search);
+      }, 1000);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [search]);
+
   return (
     <div className={classes.container}>
       <div className={classes.header}>
         <span>{header}</span>
-        <input placeholder="Search" />
+        {setSearchKey && (
+          <input
+            placeholder="Search"
+            value={search}
+            onChange={(e) => inputChangeHandler(e, setSearch, true)}
+            type="search"
+          />
+        )}
       </div>
 
       <div className={classes.tableHeaderContainer}>
@@ -90,87 +120,165 @@ const CustomTable: React.FC<CustomTableProps> = ({
       )}
 
       {data && data.length > 0 ? (
-        data.map((row, rowIndex) => {
-          const daysLeft = row?.daysLeft;
-          return (
-            <div
-              key={rowIndex}
-              className={`${classes.tableBodyContainer}`}
-              onClick={() => {
-                onRowClick && onRowClick(row);
-                setState && setState(row?._id || row?.id);
-              }}
-            >
-              {fields.map((field, colIndex) => {
-                if (field?.includes("Date")) {
+        sliceValue ? (
+          data?.slice(0, sliceValue).map((row, rowIndex) => {
+            const daysLeft = row?.daysLeft;
+            return (
+              <div
+                key={rowIndex}
+                className={`${classes.tableBodyContainer}`}
+                onClick={() => {
+                  onRowClick && onRowClick(row);
+                  setState && setState(row?._id || row?.id);
+                }}
+              >
+                {fields.map((field, colIndex) => {
+                  if (field?.includes("Date")) {
+                    return (
+                      <span key={colIndex} className={classes.tableBody}>
+                        <span
+                          className={`${
+                            daysLeft < 14
+                              ? classes?.late
+                              : daysLeft >= 14 && daysLeft < 60
+                              ? classes.midLate
+                              : classes.early
+                          }`}
+                        >
+                          {row[field] !== undefined && row[field] !== null
+                            ? capitalize(String(row[field]))
+                            : ""}
+                        </span>
+                      </span>
+                    );
+                  }
+
                   return (
                     <span key={colIndex} className={classes.tableBody}>
-                      <span
-                        className={`${
-                          daysLeft < 14
-                            ? classes?.late
-                            : daysLeft >= 14 && daysLeft < 60
-                            ? classes.midLate
-                            : classes.early
-                        }`}
-                      >
-                        {row[field] !== undefined && row[field] !== null
-                          ? capitalize(String(row[field]))
-                          : ""}
-                      </span>
+                      {row[field] !== undefined && row[field] !== null
+                        ? structureWords(String(row[field]))
+                        : ""}
                     </span>
                   );
-                }
+                })}
 
-                return (
-                  <span key={colIndex} className={classes.tableBody}>
-                    {row[field] !== undefined && row[field] !== null
-                      ? structureWords(String(row[field]))
-                      : ""}
+                {isOptions && (
+                  <span className={classes.tableBody}>
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleActiveRow(rowIndex);
+                        setState && setState(row?._id || row?.id);
+                      }}
+                      className={classes.button}
+                    >
+                      <span>Options</span>
+                      <ArrowDown dimensions="16px" />
+
+                      {activeRow === rowIndex && options.length > 0 && (
+                        <div className={classes.options} ref={optionsRef}>
+                          {options.map((option, optionIndex) => (
+                            <span
+                              key={optionIndex}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                option.action(row);
+                              }}
+                            >
+                              {option.text}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </span>
                   </span>
-                );
-              })}
+                )}
+              </div>
+            );
+          })
+        ) : (
+          data?.slice(0, sliceValue).map((row, rowIndex) => {
+            const daysLeft = row?.daysLeft;
+            return (
+              <div
+                key={rowIndex}
+                className={`${classes.tableBodyContainer}`}
+                onClick={() => {
+                  onRowClick && onRowClick(row);
+                  setState && setState(row?._id || row?.id);
+                }}
+              >
+                {fields.map((field, colIndex) => {
+                  if (field?.includes("Date")) {
+                    return (
+                      <span key={colIndex} className={classes.tableBody}>
+                        <span
+                          className={`${
+                            daysLeft < 14
+                              ? classes?.late
+                              : daysLeft >= 14 && daysLeft < 60
+                              ? classes.midLate
+                              : classes.early
+                          }`}
+                        >
+                          {row[field] !== undefined && row[field] !== null
+                            ? capitalize(String(row[field]))
+                            : ""}
+                        </span>
+                      </span>
+                    );
+                  }
 
-              {isOptions && (
-                <span className={classes.tableBody}>
-                  <span
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleActiveRow(rowIndex);
-                      setState && setState(row?._id || row?.id);
-                    }}
-                    className={classes.button}
-                  >
-                    <span>Options</span>
-                    <ArrowDown dimensions="16px" />
+                  return (
+                    <span key={colIndex} className={classes.tableBody}>
+                      {row[field] !== undefined && row[field] !== null
+                        ? structureWords(String(row[field]))
+                        : ""}
+                    </span>
+                  );
+                })}
 
-                    {activeRow === rowIndex && options.length > 0 && (
-                      <div className={classes.options} ref={optionsRef}>
-                        {options.map((option, optionIndex) => (
-                          <span
-                            key={optionIndex}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              option.action(row);
-                            }}
-                          >
-                            {option.text}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                {isOptions && (
+                  <span className={classes.tableBody}>
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleActiveRow(rowIndex);
+                        setState && setState(row?._id || row?.id);
+                      }}
+                      className={classes.button}
+                    >
+                      <span>Options</span>
+                      <ArrowDown dimensions="16px" />
+
+                      {activeRow === rowIndex && options.length > 0 && (
+                        <div className={classes.options} ref={optionsRef}>
+                          {options.map((option, optionIndex) => (
+                            <span
+                              key={optionIndex}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                option.action(row);
+                              }}
+                            >
+                              {option.text}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </span>
                   </span>
-                </span>
-              )}
-            </div>
-          );
-        })
+                )}
+              </div>
+            );
+          })
+        )
       ) : (
         <p className={classes.paragraph}>No data available</p>
       )}
 
-      {data?.length === TABLE_LENGTH && (
-        <Link href="/" className={classes.more}>
+      {route && sliceValue && data?.length >= sliceValue && (
+        <Link href={route} className={classes.more}>
           View more
         </Link>
       )}

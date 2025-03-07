@@ -13,8 +13,9 @@ import { mutate } from "swr";
 import PolicyInformationModalBody from "../PolicyInformationModalBody/PolicyInformationModalBody";
 import ReassignAnAgentModalBody from "../ReassignAnAgentModalBody/ReassignAnAgentModalBody";
 import CertificateUploadModalBody from "../CertificateUploadModalBody/CertificateUploadModalBody";
-import Loader from "@/components/Loader/Loader";
 import useUpdateSearchParams from "@/hooks/useUpdateSearchParams";
+import { usePathname } from "next/navigation";
+import { routes } from "@/utilities/routes";
 
 export const policyHeaders = [
   "Policy Held",
@@ -61,6 +62,7 @@ const PoliciesTable = () => {
   const [certificateFormData, setCertificateFormData] = useState(
     new FormData()
   );
+  const [searchKey, setSearchKey] = useState("");
 
   // Hooks
   const { updateSearchParams } = useUpdateSearchParams();
@@ -69,9 +71,13 @@ const PoliciesTable = () => {
   //   Hooks
   const { showToast } = useToast();
   const { errorFlowFunction } = useError();
-  const { isLoading: policiesIsLoading, data: policiesData } = usePolicies(
-    policy as string
-  );
+  const { isLoading: policiesIsLoading, data: policiesData } = usePolicies({
+    insuranceType: policy as string,
+    search: searchKey,
+  });
+
+  // Router
+  const pathName = usePathname();
 
   //   Memo
   const policies = useMemo(() => {
@@ -146,6 +152,8 @@ const PoliciesTable = () => {
     });
   };
 
+  console.log(searchKey, "Seatch key");
+
   const policiesOptions = [
     {
       text: "Re-assign An Agent",
@@ -179,10 +187,6 @@ const PoliciesTable = () => {
       setCertificateFormData(subCertificateFormData);
     }
   }, [certificate]);
-
-  if (policiesIsLoading) {
-    return <Loader />;
-  }
 
   return (
     <>
@@ -248,6 +252,9 @@ const PoliciesTable = () => {
               requestState?.isLoading) ||
             policiesIsLoading
           }
+          setSearchKey={setSearchKey}
+          sliceValue={pathName?.includes("dashboard") ? 5 : undefined}
+          route={routes.POLICIES}
         />
       </section>
     </>

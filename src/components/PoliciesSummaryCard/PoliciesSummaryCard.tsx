@@ -32,15 +32,12 @@ const PoliciesSummaryCard = ({
   return (
     <div className={classes.container} style={{ backgroundColor }}>
       <div className={classes.overlay}></div>
-      <span className="text-base font-normal font-main">{title}</span>
+      <span>{title}</span>
       <h2> {notAmount ? amount : `₦${formatCurrency(amount)}`}</h2>
       {cta && (
-        <div className="mt-5 flex gap-2 items-center justify-end">
-          <span className="text-xs font-normal font-main">{cta.text}</span>
-          <button
-            className="w-8 h-8 bg-white rounded-full flex items-center justify-center"
-            onClick={cta.action}
-          >
+        <div>
+          <span>{cta.text}</span>
+          <button onClick={cta.action}>
             <ArrowRight />
           </button>
         </div>

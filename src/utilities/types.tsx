@@ -171,3 +171,5 @@ export type buildingDataTypes = userType & {
   startDate: string;
   endDate: string;
 };
+
+export type queryObjectType = { [key: string]: string | number };

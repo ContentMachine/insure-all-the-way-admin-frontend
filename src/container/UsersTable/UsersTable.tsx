@@ -12,6 +12,7 @@ import { modalGenericType, requestType } from "@/utilities/types";
 import React, { useMemo, useState } from "react";
 import { mutate } from "swr";
 import UserInfoModalBody from "../UserInfoModalBody/UserInfoModalBody";
+import { routes } from "@/utilities/routes";
 
 export const headers = ["First Name", "Last Name", "Email", "Status"];
 
@@ -26,13 +27,14 @@ const UsersTable = () => {
     data: null,
     error: null,
   });
+  const [search, setSearch] = useState("");
 
   //   Hooks
   const { showToast } = useToast();
   const { errorFlowFunction } = useError();
 
   // Requests
-  const { isLoading, data } = useUsers();
+  const { isLoading, data } = useUsers({ search });
 
   //   Memo
   const users = useMemo(() => {
@@ -68,10 +70,6 @@ const UsersTable = () => {
     },
   ];
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <>
       {modals.userDetails && (
@@ -88,7 +86,7 @@ const UsersTable = () => {
         />
       )}
 
-      {users?.length > 0 && (
+      <section>
         <CustomTable
           header="Users"
           data={users}
@@ -101,10 +99,14 @@ const UsersTable = () => {
             setModalTrue(setModals, "userDetails");
           }}
           loading={
-            requestState?.isLoading && requestState?.id === "toggle-user-status"
+            (requestState?.isLoading &&
+              requestState?.id === "toggle-user-status") ||
+            isLoading
           }
+          setSearchKey={setSearch}
+          route={routes.USERS}
         />
-      )}
+      </section>
     </>
   );
 };

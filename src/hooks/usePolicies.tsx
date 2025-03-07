@@ -1,4 +1,6 @@
+import { queryObjectType } from "@/utilities/types";
 import useGetHook from "./useGetHook";
+import { generateQueryString } from "@/helpers/generateQueryString";
 
 export const useUserPoliciesStats = () => {
   const url = `/admin/stats`;
@@ -6,8 +8,10 @@ export const useUserPoliciesStats = () => {
   return useGetHook(url);
 };
 
-export const useUsers = () => {
-  const url = `/admin/users`;
+export const useUsers = (params?: queryObjectType) => {
+  const url = params
+    ? generateQueryString("/admin/users", params)
+    : `/admin/users`;
 
   return useGetHook(url);
 };
@@ -18,10 +22,10 @@ export const useUserById = (id: string) => {
   return useGetHook(url);
 };
 
-export const usePolicies = (policy?: string) => {
-  const url = policy
-    ? `/admin/policies?insuranceType=${policy}`
-    : `/admin/policies`;
+export const usePolicies = (params?: queryObjectType) => {
+  const url = params
+    ? generateQueryString("/admin/policies", params)
+    : "/admin/policies";
 
   return useGetHook(url);
 };
@@ -72,6 +76,12 @@ export const useUserStats = () => {
 
 export const useAllPolicies = () => {
   const url = `/policies/policy`;
+
+  return useGetHook(url);
+};
+
+export const usePoliciesAnalytics = () => {
+  const url = `/admin/analytics/combined`;
 
   return useGetHook(url);
 };

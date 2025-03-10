@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
   PieChart,
   Pie,
+  Cell,
 } from "recharts";
 import { useMemo, useState } from "react";
 import { structureWords } from "@/helpers/capitalize";
@@ -99,7 +100,7 @@ const DashboardStats = () => {
     }
   }, [analyticsData]);
 
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const COLORS = ["#f5b7b1", , "#edd014", "#a7c7e7", "#1b3a57", "#f3eacb"];
 
   console.log(analyticsData, "Data");
 
@@ -170,11 +171,18 @@ const DashboardStats = () => {
                   data={pieChartData}
                   cx="50%"
                   cy="50%"
-                  outerRadius={200}
-                  innerRadius={150}
+                  outerRadius={180}
+                  innerRadius={130}
                   fill="#a7c7e7"
                   label
-                />
+                >
+                  {(pieChartData as any).map((entry: any, index: number) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
                 <Tooltip />
               </PieChart>
             </ResponsiveContainer>

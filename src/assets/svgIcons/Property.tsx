@@ -1,7 +1,7 @@
 import React from "react";
 
 type PropertyTypes = {
-  color: string;
+  color?: string;
 };
 
 const Property = ({ color }: PropertyTypes) => {

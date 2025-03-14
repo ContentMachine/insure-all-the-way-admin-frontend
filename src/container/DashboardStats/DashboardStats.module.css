@@ -1,0 +1,67 @@
+.container {
+  overflow: hidden;
+}
+
+.header {
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  display: inline-flex;
+  padding-inline: 1rem;
+  border-radius: calc(infinity * 1px);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.header:hover {
+  background-color: var(--grey);
+}
+
+.header > h4 {
+  font-family: General Sans;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 140%;
+}
+
+.container > div:not(.header) {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 24px;
+  transition: all 0.3s ease-in-out;
+  margin-top: 2rem;
+}
+
+.container > div > div {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--grey);
+}
+
+.container > div > section {
+  width: 100%;
+}
+
+.container > div > div > h4 {
+  font-family: General Sans;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 140%;
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--blue2);
+}
+
+.container > div > div:nth-child(1) {
+  flex: calc(60% - 24px);
+}
+
+.container > div > div:nth-child(2) {
+  flex-basis: 40%;
+}
+
+.container > div > div > svg {
+  width: 100%;
+}

@@ -5,20 +5,33 @@
 
 .header {
   display: inline-block;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 16px;
   color: var(--black);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .header > span {
-  border: 1px solid var(--grey);
-  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--blue);
+  padding: 0.25rem 0.75rem;
   border-radius: calc(infinity * 1px);
   display: inline-block;
+}
+
+.header > input {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-family: "General Sans";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  padding: 10px;
+  min-width: 250px;
+  border: 2px solid var(--blue);
+  outline: none;
 }
 
 .tableHeaderContainer {
@@ -57,16 +70,20 @@
   background-color: var(--grey);
 }
 
-.button {
+.button,
+.tableBody > span {
   display: inline-flex;
   gap: 0.5rem;
   align-items: center;
-  border: 1px solid var(--blue);
   border-radius: calc(infinity * 1px);
   padding: 0.25rem 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   position: relative;
+}
+
+.button {
+  border: 1px solid var(--blue);
 }
 
 .button:hover:not(.options) {
@@ -118,6 +135,18 @@
   width: 100%;
   padding: 1rem 0.5rem;
   text-align: center;
+}
+
+.late {
+  background-color: #f8494977;
+}
+
+.midLate {
+  background-color: #edd01480;
+}
+
+.early {
+  background-color: var(--grey);
 }
 
 @media screen and (max-width: 767px) {

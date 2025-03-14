@@ -7,6 +7,7 @@ import Button from "@/components/Button/Button";
 import { structureWords } from "@/helpers/capitalize";
 import Close from "@/assets/svgIcons/Close";
 import { requestType } from "@/utilities/types";
+import moment from "moment";
 
 type UserInfoModalBodyType = {
   onClose?: () => void;
@@ -47,6 +48,15 @@ const UserInfoModalBody = ({
 
       <div className={classes.body}>
         {policyInfo?.map((data, i) => {
+          if (data?.title === "Updated At") {
+            return (
+              <div key={i}>
+                <h4>Last Update</h4>
+                <p>{moment(data?.value).format("Do MMMM, YYYY. hh:mma")}</p>
+              </div>
+            );
+          }
+
           return (
             <div key={i}>
               <h4>{data?.title}</h4>

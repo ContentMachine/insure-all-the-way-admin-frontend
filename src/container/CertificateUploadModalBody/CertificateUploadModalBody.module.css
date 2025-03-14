@@ -1,0 +1,26 @@
+.container {
+  width: 800px;
+  padding: 2rem;
+  min-height: 400px;
+  position: relative;
+}
+
+.container > svg {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+
+.container > h2 {
+  font-family: General Sans;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -1px;
+  text-underline-position: from-font;
+  margin-bottom: 4rem;
+}
+
+.container > button {
+  margin-top: 2rem;
+}

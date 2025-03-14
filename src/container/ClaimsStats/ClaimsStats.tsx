@@ -22,18 +22,24 @@ const ClaimsStats = () => {
         title="Claims"
         amount={stats?.claimsLength}
         notAmount
+        backgroundColor="#717171"
+        noDecoration
       />
 
       <PoliciesSummaryCard
         title="Unresolved Claims "
         amount={stats?.pendingClaims}
         notAmount
+        backgroundColor="rgb(212, 47, 47)"
+        noDecoration
       />
 
       <PoliciesSummaryCard
         title="Resolved Claims "
         amount={stats?.activeClaims}
         notAmount
+        backgroundColor="rgb(46, 204, 113)"
+        noDecoration
       />
     </section>
   );

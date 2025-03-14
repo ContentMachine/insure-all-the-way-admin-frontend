@@ -1,0 +1,39 @@
+.container {
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.container > h4 {
+  font-family: General Sans;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+
+.filters > span {
+  padding: 0.5rem 1rem;
+  border-radius: calc(infinity * 1px);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.active {
+  background: var(--grey);
+  border: 2px solid var(--blue);
+}
+
+.inActive {
+  background: var(--grey);
+  border: 2px solid var(--grey);
+}

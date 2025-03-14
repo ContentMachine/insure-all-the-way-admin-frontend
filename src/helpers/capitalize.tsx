@@ -3,10 +3,10 @@ export const capitalize = (data: string) => {
 };
 
 export const capitalizeEachWord = (text: string) => {
-  const destructuredStringArray = text.split(" ");
+  const destructuredStringArray = text?.split(" ");
   const capitalizedString = [];
 
-  for (let i = 0; i < destructuredStringArray.length; i++) {
+  for (let i = 0; i < destructuredStringArray?.length; i++) {
     capitalizedString.push(capitalize(destructuredStringArray[i]));
   }
 
@@ -14,6 +14,6 @@ export const capitalizeEachWord = (text: string) => {
 };
 
 export const structureWords = (word: string) => {
-  const replacedWord = word.replaceAll("-", " ");
+  const replacedWord = word?.replaceAll("-", " ");
   return capitalizeEachWord(replacedWord);
 };
